@@ -66,9 +66,10 @@ const displayVideos = (videos) => {
         const card = document.createElement('div');
         card.classList = "card card-compact";
         card.innerHTML =
-            `<figure class="h-[200px]">
+            `<figure class="h-[200px] relative">
     <img class="h-full w-full object-cover"
       src=${item.thumbnail}/>
+      <span class="absolute right-2 bottom-2 text-white bg-black rounded-lg p-1 font-semibold">${item.others.posted_date}</span>
     </figure>
     <div class="px-0 py-2 flex gap-2 items-start">
     <div>
@@ -78,7 +79,7 @@ const displayVideos = (videos) => {
      <h2 class="font-bold">${item.title}</h2>
      <div class= "flex gap-2 items-center">
      <p>${item.authors[0].profile_name}</p>
-     <img class="w-5" src="https://img.icons8.com/?size=48&id=D9RtvkuOe31p&format=png" /img>
+     ${item.authors[0].verified === true ? `<img class="w-5" src="https://img.icons8.com/?size=48&id=D9RtvkuOe31p&format=png" /img>` : "" }
      </div>
      
      <p>${item.others.views} Views</p>
