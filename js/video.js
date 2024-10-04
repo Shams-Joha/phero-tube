@@ -22,12 +22,27 @@ const loadVideos = async () => {
     }
 }
 
+// Remove active class fn
+
+const removeActiveClass = () => {
+    // Remote active class from all buttons
+    const allButtons = document.querySelectorAll('.category-btn');
+    allButtons.forEach((item) => {
+        item.classList.remove('active');
+    })
+
+}
+
 // Load Category Videos
 
-const loadCategoryVideos = async(id) => {
+const loadCategoryVideos = async (id) => {
     try {
         let response = await fetch(`https://openapi.programming-hero.com/api/phero-tube/category/${id}`)
         let data = await response.json();
+        removeActiveClass();
+        // Add Active class to selected button
+        const activeBtn = document.getElementById(`${id}`);
+        activeBtn.classList.add('active');
         displayVideos(data.category);
 
     }
@@ -44,7 +59,7 @@ const displayData = (categories) => {
         const buttonContainer = document.createElement('div');
         buttonContainer.innerHTML =
             `
-       <button onclick = "loadCategoryVideos(${item.category_id})" class ="btn">
+       <button id="${item.category_id}" onclick = "loadCategoryVideos(${item.category_id})" class ="btn category-btn">
        ${item.category}
        </button>
        `
@@ -59,11 +74,11 @@ const displayData = (categories) => {
 // display the Videos
 
 const displayVideos = (videos) => {
-    
+
     const videoContainer = document.getElementById('videos');
     videoContainer.innerHTML = "";
 
-    if(videos.length == 0){
+    if (videos.length == 0) {
         videoContainer.classList.remove('grid');
         videoContainer.innerHTML = `
         <div class = "min-h-[300px] w-full flex flex-col gap-5 justify-center items-center">
@@ -73,11 +88,10 @@ const displayVideos = (videos) => {
         `;
         return;
     }
-    else{
+    else {
         videoContainer.classList.add('grid');
     }
     videos.forEach((item) => {
-        console.log(item);
         const card = document.createElement('div');
         card.classList = "card card-compact";
         card.innerHTML =
