@@ -50,10 +50,9 @@ const loadDetails = async (videoID) => {
 
 
 // Load the videos
-const loadVideos = async () => {
+const loadVideos = async (searchText = "") => {
     try {
-        let response = await fetch('https://openapi.programming-hero.com/api/phero-tube/videos')
-
+        let response = await fetch(`https://openapi.programming-hero.com/api/phero-tube/videos?title=${searchText}`)
         let data = await response.json();
         displayVideos(data.videos);
 
@@ -180,6 +179,9 @@ const displayVideos = (videos) => {
 
 
 // ------------Call functions -----------------------
+document.getElementById('search-input').addEventListener("keyup", function (e) {
+    loadVideos(e.target.value);
+});
 loadCategories();
 loadVideos();
 
